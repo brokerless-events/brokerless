@@ -1,0 +1,14 @@
+POST http://127.0.0.1:9100/publish
+Content-Type: application/json
+
+{}
+
+###
+
+
+GET http://127.0.0.1:9100/received
+Content-Type: application/json
+
+{}
+
+###
