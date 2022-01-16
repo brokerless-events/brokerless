@@ -24,7 +24,7 @@ public class EventPublisher {
 
     String name = eventPayload.getClass().getName();
     EventMetadata metadata = new EventMetadata(Generators.timeBasedGenerator().generate(), name, now());
-    EventProductionTracing tracing = new EventProductionTracing(now(), PRODUCER_INSTANCE_NAME, producerInstanceId);
+    EventProductionTracing tracing = new EventProductionTracing(now(), now(), PRODUCER_INSTANCE_NAME, producerInstanceId);
     outboxClient.store(eventPayload, metadata, tracing);
 
   }

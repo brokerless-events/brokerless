@@ -1,4 +1,4 @@
-package brokerless.inbox;
+package brokerless.inbox.handling;
 
 import java.lang.reflect.Method;
 
