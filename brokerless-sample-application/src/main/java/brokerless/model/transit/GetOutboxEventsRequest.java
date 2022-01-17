@@ -1,8 +1,15 @@
 package brokerless.model.transit;
 
+import lombok.*;
+
 import java.util.Set;
 import java.util.UUID;
 
-public record GetOutboxEventsRequest(Set<String> eventTypes, UUID fromCursorExclusive) {
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@EqualsAndHashCode
+public class GetOutboxEventsRequest {
+  private Set<String> eventTypes;
+  private UUID fromCursorExclusive = new UUID(0, 0);
 }

@@ -1,11 +1,14 @@
 package brokerless.model.transit;
 
-import lombok.Value;
+import lombok.*;
 
 import java.util.List;
 
-@Value
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class GetOutboxEventsResponse {
 
-  List<SerializedEventMessage> eventMessages;
+  private List<SerializedEventMessage> eventMessages;
 }

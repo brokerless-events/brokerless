@@ -1,5 +1,5 @@
 package brokerless.model.transit;
 
 public interface TransitConstants {
-  String OUTBOX_ENDPOINT_PATH = "/borkerless-events/outbox";
+  String OUTBOX_ENDPOINT_PATH = "/brokerless-events/outbox";
 }

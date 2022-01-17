@@ -24,7 +24,7 @@ public class EventHandlerConfigurationException extends RuntimeException {
 
 
   public static EventHandlerConfigurationException illegalArguments(Method method) {
-    return new EventHandlerConfigurationException(format("Could not configure handler '%s' because it does not have the correct arguments.", method);
+    return new EventHandlerConfigurationException(format("Could not configure handler '%s' because it does not have the correct arguments.", method));
   }
 
 

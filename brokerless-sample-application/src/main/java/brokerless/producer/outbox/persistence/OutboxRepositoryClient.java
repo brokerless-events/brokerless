@@ -30,15 +30,16 @@ public class OutboxRepositoryClient implements OutboxClient {
   @SneakyThrows
   public void store(EventPayload payload, EventMetadata metadata, EventProductionTracing tracing) {
     String message = objectMapper.writeValueAsString(payload);
-    OutboxEvent outboxEvent = new OutboxEvent(metadata.getEventId(), metadata.getEventType(), tracing.getPublishedTime(), message);
+    OutboxEvent outboxEvent = new OutboxEvent(metadata.getEventId(), metadata.getEventType(),
+        tracing.getOccurredTime(), tracing.getPublishedTime(), tracing.getProducerInstanceId(),
+        message);
     repository.save(outboxEvent);
   }
 
-
   @Override
   public List<SerializedEventMessage> read(Set<String> types, UUID fromCursorExclusive) {
-    PageRequest pageable = PageRequest.of(0, 1000, Sort.by(ASC, "event_id"));
-    return repository.findByTypeInAndIdAfter(types, fromCursorExclusive, pageable)
+    PageRequest pageable = PageRequest.of(0, 1000, Sort.by(ASC, "eventId"));
+    return repository.findByEventTypeInAndEventIdAfter(types, fromCursorExclusive, pageable)
         .stream()
         .map(OutboxEvent::toSerializedEventMessage)
         .toList();

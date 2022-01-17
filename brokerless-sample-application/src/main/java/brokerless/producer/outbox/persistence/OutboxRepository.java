@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface OutboxRepository extends JpaRepository<OutboxEvent, UUID> {
 
-  Page<OutboxEvent> findByTypeInAndIdAfter(Set<String> types, UUID fromIdExclusive, Pageable pageable);
+  Page<OutboxEvent> findByEventTypeInAndEventIdAfter(Set<String> types, UUID fromIdExclusive, Pageable pageable);
 }

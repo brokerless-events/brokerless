@@ -1,12 +1,15 @@
 package brokerless.model.transit;
 
-import lombok.Value;
+import lombok.*;
 
 import java.util.UUID;
 
-@Value
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class SerializedEventMessage {
-  UUID eventId;
-  String eventType;
-  String message;
+  private UUID eventId;
+  private String eventType;
+  private String message;
 }

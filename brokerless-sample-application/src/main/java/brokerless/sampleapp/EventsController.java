@@ -1,5 +1,6 @@
 package brokerless.sampleapp;
 
+import brokerless.consumer.handling.BrokerlessEventHandler;
 import brokerless.consumer.handling.registry.EventHandlerRegistry;
 import brokerless.model.EventPayload;
 import brokerless.producer.publication.EventPublisher;
@@ -23,12 +24,6 @@ public class EventsController {
   private final EventPublisher eventPublisher;
   private final List<EventPayload> events = new ArrayList<>();
 
-  @PostConstruct
-  public void registerEventHandler() {
-    eventHandlerRegistry.register(SampleEvent1.class, this::handleSampleEvent);
-    eventHandlerRegistry.register(SampleEvent2.class, this::handleSampleEvent);
-  }
-
   @PostMapping("/publish")
   public void publish() {
     eventPublisher.publishEvent(new SampleEvent1("message1"));
@@ -41,11 +36,13 @@ public class EventsController {
     return events;
   }
 
-  public void handleSampleEvent(SampleEvent1 event) {
+  @BrokerlessEventHandler
+  public void handleSampleEvent1(SampleEvent1 event) {
     log.info(event.getMessage());
   }
 
-  public void handleSampleEvent(SampleEvent2 event) {
+  @BrokerlessEventHandler
+  public void handleSampleEvent2(SampleEvent2 event) {
     log.info(event.getMessage());
   }
 

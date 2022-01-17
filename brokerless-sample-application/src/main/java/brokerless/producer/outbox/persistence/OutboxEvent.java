@@ -26,18 +26,24 @@ public class OutboxEvent {
   @Id
   @Nullable
   @Column(name = "event_id")
-  private UUID id;
+  private UUID eventId;
 
   @Column(name = "event_type")
-  private String type;
+  private String eventType;
+
+  @Column(name = "occurred_time")
+  private Instant occurredTime;
 
   @Column(name = "published_time")
   private Instant publishedTime;
+
+  @Column(name = "producer_instance_id")
+  private UUID producerInstanceId;
 
   @Column(name = "event_message")
   private String message;
 
   public SerializedEventMessage toSerializedEventMessage() {
-    return new SerializedEventMessage(id, type, message);
+    return new SerializedEventMessage(eventId, eventType, message);
   }
 }

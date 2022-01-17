@@ -1,13 +1,13 @@
 package brokerless.producer.outbox.transit;
 
 import brokerless.model.transit.GetOutboxEventsRequest;
-import brokerless.model.transit.SerializedEventMessage;
+import brokerless.model.transit.GetOutboxEventsResponse;
 import brokerless.producer.OutboxClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 import static brokerless.model.transit.TransitConstants.OUTBOX_ENDPOINT_PATH;
 
@@ -15,11 +15,11 @@ import static brokerless.model.transit.TransitConstants.OUTBOX_ENDPOINT_PATH;
 @RequiredArgsConstructor
 public class OutboxController {
 
-  private OutboxClient outboxClient;
+  private final OutboxClient outboxClient;
 
-  @GetMapping(OUTBOX_ENDPOINT_PATH)
-  public List<SerializedEventMessage> getOutboxEvents(GetOutboxEventsRequest request) {
-    return outboxClient.read(request.eventTypes(), request.fromCursorExclusive());
+  @PostMapping(value = OUTBOX_ENDPOINT_PATH, consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
+  public GetOutboxEventsResponse getOutboxEvents(@RequestBody GetOutboxEventsRequest request) {
+    return new GetOutboxEventsResponse(outboxClient.read(request.getEventTypes(), request.getFromCursorExclusive()));
   }
 
 }
