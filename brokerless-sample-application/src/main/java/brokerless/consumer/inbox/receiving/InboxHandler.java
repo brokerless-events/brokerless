@@ -1,4 +1,4 @@
-package brokerless.consumer.inbox.receive;
+package brokerless.consumer.inbox.receiving;
 
 import brokerless.consumer.handling.invocation.EventHandlerInvoker;
 import brokerless.consumer.inbox.persistence.ProducerCursorRepository;

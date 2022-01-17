@@ -1,4 +1,4 @@
-package brokerless.outbox.persistence;
+package brokerless.producer.outbox.persistence;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

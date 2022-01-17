@@ -1,4 +1,4 @@
-package brokerless.inbox.handling.registry;
+package brokerless.consumer.handling.registry;
 
 import java.lang.reflect.Method;
 

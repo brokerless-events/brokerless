@@ -1,4 +1,4 @@
-package brokerless.inbox.persistence;
+package brokerless.consumer.inbox.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

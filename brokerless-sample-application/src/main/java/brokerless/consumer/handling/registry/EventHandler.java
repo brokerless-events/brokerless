@@ -1,4 +1,4 @@
-package brokerless.inbox.handling.registry;
+package brokerless.consumer.handling.registry;
 
 import brokerless.model.EventMessage;
 import brokerless.model.EventMetadata;

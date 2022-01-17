@@ -1,8 +1,8 @@
-package brokerless.outbox.transit;
+package brokerless.producer.outbox.transit;
 
 import brokerless.model.transit.GetOutboxEventsRequest;
 import brokerless.model.transit.SerializedEventMessage;
-import brokerless.outbox.OutboxClient;
+import brokerless.producer.OutboxClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

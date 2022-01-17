@@ -9,7 +9,7 @@ import java.util.UUID;
 public class EventMetadata {
 
   UUID eventId;
-  String type;
+  String eventType;
   Instant occurredTime;
 
 }

@@ -1,14 +1,12 @@
-package brokerless.model.transmission;
+package brokerless.model.transit;
 
 import lombok.Value;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Value
 public class SerializedEventMessage {
-  UUID id;
-  String type;
-  Instant publishedTime;
+  UUID eventId;
+  String eventType;
   String message;
 }

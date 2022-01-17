@@ -1,4 +1,4 @@
-package brokerless.outbox;
+package brokerless.producer;
 
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;

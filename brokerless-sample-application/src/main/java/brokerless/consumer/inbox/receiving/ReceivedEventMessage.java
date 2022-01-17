@@ -1,4 +1,4 @@
-package brokerless.consumer.inbox.receive;
+package brokerless.consumer.inbox.receiving;
 
 import brokerless.model.transit.SerializedEventMessage;
 import lombok.Value;

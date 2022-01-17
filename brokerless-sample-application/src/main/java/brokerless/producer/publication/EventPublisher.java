@@ -1,9 +1,9 @@
-package brokerless.outbox.publication;
+package brokerless.producer.publication;
 
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;
-import brokerless.outbox.EventProductionTracing;
-import brokerless.outbox.OutboxClient;
+import brokerless.producer.EventProductionTracing;
+import brokerless.producer.OutboxClient;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;

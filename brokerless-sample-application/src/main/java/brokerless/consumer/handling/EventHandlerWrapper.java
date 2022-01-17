@@ -1,6 +1,6 @@
-package brokerless.inbox.handling;
+package brokerless.consumer.handling;
 
-import brokerless.inbox.handling.registry.EventHandlerConfigurationException;
+import brokerless.consumer.handling.registry.EventHandlerConfigurationException;
 import brokerless.model.EventPayload;
 import lombok.Value;
 

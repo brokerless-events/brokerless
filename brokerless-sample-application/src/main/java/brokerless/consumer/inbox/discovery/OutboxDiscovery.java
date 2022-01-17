@@ -1,4 +1,4 @@
-package brokerless.consumer.discovery;
+package brokerless.consumer.inbox.discovery;
 
 import brokerless.consumer.ProducerConfiguration;
 

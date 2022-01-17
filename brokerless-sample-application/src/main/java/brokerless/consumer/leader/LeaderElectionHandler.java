@@ -1,4 +1,4 @@
-package brokerless.inbox.leader;
+package brokerless.consumer.leader;
 
 import java.util.Objects;
 

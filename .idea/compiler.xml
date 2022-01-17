@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="brokerless-sample-application" />
+        <module name="brokerless-sample-aplication" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -25,6 +26,7 @@
       <module name="brokerless-model" options="-parameters" />
       <module name="brokerless-outbox" options="-parameters" />
       <module name="brokerless-outbox-spring-boot-starter" options="-parameters" />
+      <module name="brokerless-sample-aplication" options="-parameters" />
       <module name="brokerless-sample-application" options="-parameters" />
     </option>
   </component>

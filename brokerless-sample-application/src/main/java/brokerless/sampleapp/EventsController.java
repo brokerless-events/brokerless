@@ -1,8 +1,8 @@
 package brokerless.sampleapp;
 
-import brokerless.inbox.EventHandlerRegistry;
+import brokerless.consumer.handling.registry.EventHandlerRegistry;
 import brokerless.model.EventPayload;
-import brokerless.outbox.EventPublisher;
+import brokerless.producer.publication.EventPublisher;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

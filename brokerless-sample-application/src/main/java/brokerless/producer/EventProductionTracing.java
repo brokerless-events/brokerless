@@ -1,4 +1,4 @@
-package brokerless.outbox;
+package brokerless.producer;
 
 import brokerless.model.EventTracing;
 import lombok.Value;

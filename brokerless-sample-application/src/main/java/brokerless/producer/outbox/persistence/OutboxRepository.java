@@ -1,4 +1,4 @@
-package brokerless.outbox.persistence;
+package brokerless.producer.outbox.persistence;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package brokerless.inbox;
+package brokerless.consumer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

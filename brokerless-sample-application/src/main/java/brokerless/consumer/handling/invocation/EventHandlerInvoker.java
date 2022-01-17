@@ -1,7 +1,7 @@
-package brokerless.inbox.handling.invocation;
+package brokerless.consumer.handling.invocation;
 
-import brokerless.inbox.handling.registry.EventHandler;
-import brokerless.inbox.handling.registry.EventHandlerRegistry;
+import brokerless.consumer.handling.registry.EventHandler;
+import brokerless.consumer.handling.registry.EventHandlerRegistry;
 import brokerless.model.EventMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

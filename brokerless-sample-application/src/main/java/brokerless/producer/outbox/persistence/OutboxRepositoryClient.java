@@ -1,10 +1,10 @@
-package brokerless.outbox.persistence;
+package brokerless.producer.outbox.persistence;
 
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;
 import brokerless.model.transit.SerializedEventMessage;
-import brokerless.outbox.EventProductionTracing;
-import brokerless.outbox.OutboxClient;
+import brokerless.producer.EventProductionTracing;
+import brokerless.producer.OutboxClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 

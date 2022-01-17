@@ -1,7 +1,7 @@
-package brokerless.inbox.handling.discovery;
+package brokerless.consumer.handling.discovery;
 
-import brokerless.inbox.handling.BrokerlessEventHandler;
-import brokerless.inbox.handling.registry.EventHandlerRegistry;
+import brokerless.consumer.handling.BrokerlessEventHandler;
+import brokerless.consumer.handling.registry.EventHandlerRegistry;
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;
 import brokerless.model.EventTracing;
@@ -15,7 +15,7 @@ import org.springframework.util.ReflectionUtils.MethodFilter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static brokerless.inbox.handling.registry.EventHandlerConfigurationException.*;
+import static brokerless.consumer.handling.registry.EventHandlerConfigurationException.*;
 import static org.springframework.core.annotation.AnnotationUtils.findAnnotation;
 
 public class EventHandlerDiscoveryProcessor implements BeanPostProcessor {

@@ -1,6 +1,5 @@
-package brokerless.inbox.leader;
+package brokerless.consumer.leader;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.kubernetes.commons.leader.LeaderProperties;
 import org.springframework.integration.leader.Context;
 import org.springframework.integration.leader.event.OnGrantedEvent;

@@ -1,4 +1,4 @@
-package brokerless.inbox.handling;
+package brokerless.consumer.handling;
 
 public @interface BrokerlessEventHandler {
 }
