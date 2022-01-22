@@ -2,46 +2,17 @@ package brokerless.producer.outbox.persistence;
 
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;
-import brokerless.model.transit.SerializedEventMessage;
-import brokerless.producer.EventProductionTracing;
-import brokerless.producer.OutboxClient;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import brokerless.model.transit.TransitedEventMessage;
+import brokerless.producer.publication.EventProductionTracing;
 
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import lombok.SneakyThrows;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
+public interface OutboxRepositoryClient {
 
-import static org.springframework.data.domain.Sort.Direction.ASC;
+    void store(EventPayload payload, EventMetadata metadata, EventProductionTracing tracing);
 
-@Component
-@RequiredArgsConstructor
-public class OutboxRepositoryClient implements OutboxClient {
+    List<TransitedEventMessage> read(Set<String> types, UUID fromCursorExclusive);
 
-  private final OutboxRepository repository;
-  private final ObjectMapper objectMapper = new ObjectMapper();
-
-  @Override
-  @SneakyThrows
-  public void store(EventPayload payload, EventMetadata metadata, EventProductionTracing tracing) {
-    String message = objectMapper.writeValueAsString(payload);
-    OutboxEvent outboxEvent = new OutboxEvent(metadata.getEventId(), metadata.getEventType(),
-        tracing.getOccurredTime(), tracing.getPublishedTime(), tracing.getProducerInstanceId(),
-        message);
-    repository.save(outboxEvent);
-  }
-
-  @Override
-  public List<SerializedEventMessage> read(Set<String> types, UUID fromCursorExclusive) {
-    PageRequest pageable = PageRequest.of(0, 1000, Sort.by(ASC, "eventId"));
-    return repository.findByEventTypeInAndEventIdAfter(types, fromCursorExclusive, pageable)
-        .stream()
-        .map(OutboxEvent::toSerializedEventMessage)
-        .toList();
-  }
 }

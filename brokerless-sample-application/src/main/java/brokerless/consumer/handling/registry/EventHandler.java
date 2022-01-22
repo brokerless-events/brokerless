@@ -1,9 +1,8 @@
 package brokerless.consumer.handling.registry;
 
-import brokerless.model.EventMessage;
 import brokerless.model.EventMetadata;
-import brokerless.model.EventPayload;
 import brokerless.model.EventTracing;
+import brokerless.model.transit.TransitedEventMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.TriConsumer;
@@ -21,14 +20,14 @@ public class EventHandler<T> {
     this.objectMapper = objectMapper;
   }
 
-  public void handleEvent(EventMessage eventMessage) {
-    final T payload = parsePayload(eventMessage.getPayload());
-    eventHandlerFunction.accept(payload, eventMessage.getMetadata(), eventMessage.getTracing());
+  public void handleEvent(TransitedEventMessage message) {
+    final T payload = parsePayload(message.getEventPayloadSerialised());
+    eventHandlerFunction.accept(payload, message.getEventMetadata(), message.getEventTracing());
   }
 
-  private T parsePayload(final EventPayload eventPayload) {
+  private T parsePayload(final String payloadSerialised) {
     try {
-      return objectMapper.convertValue(eventPayload, eventClass);
+      return objectMapper.convertValue(payloadSerialised, eventClass);
     } catch (final IllegalArgumentException e) {
       log.error("Failed to parse events payload", e);
       return null;

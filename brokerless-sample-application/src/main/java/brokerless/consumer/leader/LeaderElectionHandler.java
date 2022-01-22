@@ -1,7 +1,8 @@
 package brokerless.consumer.leader;
 
-import java.util.Objects;
-
+import io.fabric8.kubernetes.api.model.Pod;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.kubernetes.commons.PodUtils;
 import org.springframework.context.event.EventListener;
@@ -9,10 +10,7 @@ import org.springframework.integration.leader.event.OnGrantedEvent;
 import org.springframework.integration.leader.event.OnRevokedEvent;
 import org.springframework.stereotype.Service;
 
-import com.onegini.oneex.consumer.configuration.condition.ConditionalOnLeaderElectionEnabled;
-import io.fabric8.kubernetes.api.model.Pod;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Objects;
 
 @Slf4j
 @Service

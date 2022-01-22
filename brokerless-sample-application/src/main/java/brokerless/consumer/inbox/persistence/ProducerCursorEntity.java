@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 @Getter
-public class ProducerCursor {
+public class ProducerCursorEntity {
 
   @Id
   @Column(name = "producer_name")

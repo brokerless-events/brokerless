@@ -1,12 +1,15 @@
 package brokerless.model;
 
-import lombok.Value;
+import lombok.*;
 
-@Value
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class EventMessage {
 
-  EventTracing tracing;
-  EventMetadata metadata;
   EventPayload payload;
+  EventMetadata metadata;
+  EventTracing tracing;
 
 }

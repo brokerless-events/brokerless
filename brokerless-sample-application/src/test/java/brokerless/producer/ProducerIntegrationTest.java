@@ -1,10 +1,11 @@
-package brokerless.producer.publication;
+package brokerless.producer;
 
 import brokerless.model.EventPayload;
 import brokerless.model.serialization.ObjectMapperProvider;
 import brokerless.model.transit.GetOutboxEventsResponse;
-import brokerless.model.transit.SerializedEventMessage;
-import brokerless.producer.OutboxClient;
+import brokerless.model.transit.TransitedEventMessage;
+import brokerless.producer.outbox.persistence.OutboxRepositoryClient;
+import brokerless.producer.publication.EventPublisher;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +23,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -36,7 +34,6 @@ import static brokerless.model.transit.TransitConstants.OUTBOX_ENDPOINT_PATH;
 import static java.lang.String.format;
 import static java.util.List.of;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -51,11 +48,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {
     "logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter=DEBUG"
 })
-@ContextConfiguration(classes = ProducerIntergrationTest.SpringConfiguration.class)
-class ProducerIntergrationTest {
+@ContextConfiguration(classes = ProducerIntegrationTest.SpringConfiguration.class)
+class ProducerIntegrationTest {
 
-  @Autowired EventPublisher publisher;
-  @Autowired OutboxClient outboxClient;
+  @Autowired
+  EventPublisher publisher;
+  @Autowired
+  OutboxRepositoryClient outboxClient;
   @Autowired MockMvc mockMvc;
   @Autowired ObjectMapperProvider objectMapperProvider;
 
@@ -87,7 +86,7 @@ class ProducerIntergrationTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
-    List<SerializedEventMessage> eventMessages = objectMapperProvider.get().readValue(responseString, GetOutboxEventsResponse.class).getEventMessages();
+    List<TransitedEventMessage> eventMessages = objectMapperProvider.get().readValue(responseString, GetOutboxEventsResponse.class).getEventMessages();
 
     assertThat(eventMessages).hasSize(4);
     assertEventMessage(eventMessages.get(0), SampleProducerTest1Event.class, "testdata1");
@@ -96,9 +95,9 @@ class ProducerIntergrationTest {
     assertEventMessage(eventMessages.get(3), SampleProducerTest4Event.class, "testdata4");
   }
 
-  private <T> void assertEventMessage(SerializedEventMessage eventMessage, Class<T> payloadClass, String expectedData) {
-    assertThat(eventMessage.getEventType()).isEqualTo(payloadClass.getName());
-    assertThat(getEventPayloadData(eventMessage.getMessage(), payloadClass)).isEqualTo(expectedData);
+  private <T> void assertEventMessage(TransitedEventMessage eventMessage, Class<T> payloadClass, String expectedData) {
+    assertThat(eventMessage.getEventMetadata().getEventType()).isEqualTo(payloadClass.getName());
+    assertThat(getEventPayloadData(eventMessage.getEventPayloadSerialised(), payloadClass)).isEqualTo(expectedData);
   }
 
   @SneakyThrows
@@ -142,14 +141,14 @@ class ProducerIntergrationTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
-    List<SerializedEventMessage> eventMessagesPage1 = objectMapperProvider.get().readValue(responseStringPage1, GetOutboxEventsResponse.class).getEventMessages();
+    List<TransitedEventMessage> eventMessagesPage1 = objectMapperProvider.get().readValue(responseStringPage1, GetOutboxEventsResponse.class).getEventMessages();
 
     assertThat(eventMessagesPage1).hasSize(1000);
     for (int i = 0 ; i < 1000 ; i ++) {
       assertEventMessage(eventMessagesPage1.get(i), SampleProducerTest1Event.class, "testdata" + i);
     }
 
-    UUID lastEventMessageId = eventMessagesPage1.get(999).getEventId();
+    UUID lastEventMessageId = eventMessagesPage1.get(999).getEventMetadata().getEventId();
 
     String responseStringPage2 = mockMvc.perform(post(OUTBOX_ENDPOINT_PATH)
             .contentType("application/json;charset=UTF-8")
@@ -166,7 +165,7 @@ class ProducerIntergrationTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();
 
-    List<SerializedEventMessage> eventMessages2 = objectMapperProvider.get().readValue(responseStringPage2, GetOutboxEventsResponse.class).getEventMessages();
+    List<TransitedEventMessage> eventMessages2 = objectMapperProvider.get().readValue(responseStringPage2, GetOutboxEventsResponse.class).getEventMessages();
 
     assertThat(eventMessages2).hasSize(1);
     assertEventMessage(eventMessages2.get(0), SampleProducerTest1Event.class, "testdata1000");

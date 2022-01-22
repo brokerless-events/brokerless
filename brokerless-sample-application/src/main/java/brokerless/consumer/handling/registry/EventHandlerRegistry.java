@@ -9,19 +9,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Optional.ofNullable;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class EventHandlerRegistry {
 
   private final ConcurrentHashMap<String, EventHandler<?>> handlers = new ConcurrentHashMap<>();
 
-  ObjectMapperProvider objectMapperProvider;
+  private final ObjectMapperProvider objectMapperProvider;
 
 
   public <T extends EventPayload> void register(Class<T> eventClass, TriConsumer<T, EventMetadata, EventTracing> handlerFunction) {
@@ -37,6 +39,10 @@ public class EventHandlerRegistry {
 
   public Optional<EventHandler<?>> get(String type) {
     return ofNullable(handlers.get(type));
+  }
+
+  public Set<String> getAllEventTypes() {
+    return handlers.keySet();
   }
 
 }

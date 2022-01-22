@@ -1,4 +1,4 @@
-package brokerless.producer.publication;
+package brokerless.producer;
 
 import brokerless.model.EventPayload;
 import lombok.*;
@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class SampleProducerTest1Event implements EventPayload {
-  String data1;
+public class SampleProducerTest2Event implements EventPayload {
+  String data2;
 }

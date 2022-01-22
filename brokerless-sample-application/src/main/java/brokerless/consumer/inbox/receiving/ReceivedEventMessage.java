@@ -1,11 +1,15 @@
 package brokerless.consumer.inbox.receiving;
 
-import brokerless.model.transit.SerializedEventMessage;
-import lombok.Value;
+import brokerless.model.transit.TransitedEventMessage;
+import lombok.*;
 
-@Value
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@EqualsAndHashCode
+@ToString
 public class ReceivedEventMessage {
 
-  SerializedEventMessage eventMessage;
-  String producerName;
+  private String producerName;
+  private TransitedEventMessage message;
 }

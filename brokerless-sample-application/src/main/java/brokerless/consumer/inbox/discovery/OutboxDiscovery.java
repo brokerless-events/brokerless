@@ -1,6 +1,6 @@
 package brokerless.consumer.inbox.discovery;
 
-import brokerless.consumer.ProducerConfiguration;
+import brokerless.consumer.inbox.configuration.ProducerConfiguration;
 
 import java.util.List;
 

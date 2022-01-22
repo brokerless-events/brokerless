@@ -1,25 +1,36 @@
 package brokerless.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.*;
 
 import java.time.Instant;
 
-@Value
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class EventTracing {
 
   public EventTracing(Instant occurredTime, Instant publishedTime) {
+    this(occurredTime, publishedTime, null);
+  }
+
+  public EventTracing(Instant occurredTime, Instant publishedTime, Instant outboxWriteTime) {
+    this(occurredTime, publishedTime, outboxWriteTime,null);
+  }
+
+  public EventTracing(Instant occurredTime, Instant publishedTime, Instant outboxWriteTime, Instant outboxServedTime) {
     this.occurredTime = occurredTime;
     this.publishedTime = publishedTime;
-    this.outboxTime = null;
-    this.inboxTime = null;
+    this.outboxWriteTime = outboxWriteTime;
+    this.outboxServedTime = outboxServedTime;
+    this.inboxReceivedTime = null;
     this.handledTime = null;
   }
 
   Instant occurredTime;
   Instant publishedTime;
-  Instant outboxTime;
-  Instant inboxTime;
+  Instant outboxWriteTime;
+  Instant outboxServedTime;
+  Instant inboxReceivedTime;
   Instant handledTime;
 }

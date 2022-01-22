@@ -2,8 +2,7 @@ package brokerless.producer.publication;
 
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;
-import brokerless.producer.EventProductionTracing;
-import brokerless.producer.OutboxClient;
+import brokerless.producer.outbox.persistence.OutboxRepositoryClient;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
@@ -20,13 +19,13 @@ public class EventPublisher {
   public static final String PRODUCER_INSTANCE_NAME = "p1";
   private static final UUID producerInstanceId = randomUUID();
 
-  private final OutboxClient outboxClient;
+  private final OutboxRepositoryClient outboxClient;
 
   public void publishEvent(EventPayload eventPayload) {
 
     String name = eventPayload.getClass().getName();
-    EventMetadata metadata = new EventMetadata(Generators.timeBasedGenerator().generate(), name, now());
-    EventProductionTracing tracing = new EventProductionTracing(now(), now(), PRODUCER_INSTANCE_NAME, producerInstanceId);
+    EventMetadata metadata = new EventMetadata(Generators.timeBasedGenerator().generate(), name, PRODUCER_INSTANCE_NAME, producerInstanceId);
+    EventProductionTracing tracing = new EventProductionTracing(now(), now());
     outboxClient.store(eventPayload, metadata, tracing);
 
   }

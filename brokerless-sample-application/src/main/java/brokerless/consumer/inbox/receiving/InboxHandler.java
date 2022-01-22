@@ -1,12 +1,11 @@
 package brokerless.consumer.inbox.receiving;
 
 import brokerless.consumer.handling.invocation.EventHandlerInvoker;
+import brokerless.consumer.inbox.persistence.ProducerCursorEntity;
 import brokerless.consumer.inbox.persistence.ProducerCursorRepository;
-import brokerless.model.EventMessage;
-import brokerless.model.transit.SerializedEventMessage;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import brokerless.model.serialization.ObjectMapperProvider;
+import brokerless.model.transit.TransitedEventMessage;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +17,10 @@ public class InboxHandler {
   private final EventHandlerInvoker eventHandlerInvoker;
 
   @Transactional
-  public void handle(ReceivedEventMessage receivedEventMessage) {
-    EventMessage eventMessage = deserializeEventMessage(receivedEventMessage.getEventMessage());
-    eventHandlerInvoker.invokeHandler(eventMessage);
-    producerCursorRepository.updateCursor(receivedEventMessage.getProducerName(), receivedEventMessage.getEventMessage().getEventId());
+  public void handle(ReceivedEventMessage message) {
+    eventHandlerInvoker.invokeHandler(message.getMessage());
+    producerCursorRepository.save(new ProducerCursorEntity(message.getProducerName(), message.getMessage().getEventMetadata().getEventId()));
   }
 
 
-  @SneakyThrows
-  private EventMessage deserializeEventMessage(SerializedEventMessage serializedEventMessage) {
-    ObjectMapper om = new ObjectMapper();
-    return om.readValue(serializedEventMessage.getMessage(), EventMessage.class);
-  }
 }

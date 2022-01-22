@@ -9,6 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
+@ToString
 public class GetOutboxEventsRequest {
   private Set<String> eventTypes;
   private UUID fromCursorExclusive = new UUID(0, 0);

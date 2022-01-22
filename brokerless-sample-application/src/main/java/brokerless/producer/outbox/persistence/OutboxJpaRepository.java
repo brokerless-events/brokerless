@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Set;
 import java.util.UUID;
 
-public interface OutboxRepository extends JpaRepository<OutboxEvent, UUID> {
+public interface OutboxJpaRepository extends JpaRepository<OutboxEvent, UUID> {
 
   Page<OutboxEvent> findByEventTypeInAndEventIdAfter(Set<String> types, UUID fromIdExclusive, Pageable pageable);
 }

@@ -1,15 +1,23 @@
 package brokerless.model;
 
-import lombok.Value;
+import lombok.*;
 
-import java.time.Instant;
 import java.util.UUID;
 
-@Value
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class EventMetadata {
+
+  public EventMetadata(UUID eventId, String eventType) {
+    this.eventId = eventId;
+    this.eventType = eventType;
+  }
 
   UUID eventId;
   String eventType;
-  Instant occurredTime;
+  String producerName;
+  UUID producerInstanceId;
 
 }

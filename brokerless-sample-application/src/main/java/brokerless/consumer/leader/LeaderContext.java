@@ -1,14 +1,12 @@
 package brokerless.consumer.leader;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.kubernetes.commons.leader.LeaderProperties;
 import org.springframework.integration.leader.Context;
 import org.springframework.integration.leader.event.OnGrantedEvent;
 import org.springframework.integration.leader.event.OnRevokedEvent;
 import org.springframework.stereotype.Component;
-
-import com.onegini.oneex.consumer.configuration.condition.ConditionalOnLeaderElectionEnabled;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 

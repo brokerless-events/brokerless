@@ -8,7 +8,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
+@ToString
 public class GetOutboxEventsResponse {
 
-  private List<SerializedEventMessage> eventMessages;
+  private List<TransitedEventMessage> eventMessages;
 }
