@@ -2,11 +2,10 @@ package brokerless.consumer.inbox;
 
 import brokerless.consumer.handling.invocation.EventHandlerInvoker;
 import brokerless.consumer.handling.registry.EventHandlerRegistry;
-import brokerless.consumer.inbox.configuration.ProducerConfiguration;
-import brokerless.consumer.inbox.configuration.ProducersConfigurationProperties;
+import brokerless.consumer.inbox.discovery.properties.ProducerConfiguration;
+import brokerless.consumer.inbox.discovery.properties.ProducersConfigurationProperties;
 import brokerless.consumer.inbox.receiving.PollingEventsReceiver;
-import brokerless.consumer.inbox.trigger.ScheduledTrigger;
-import brokerless.model.EventMessage;
+import brokerless.consumer.inbox.receiving.PollingScheduler;
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;
 import brokerless.model.EventTracing;
@@ -142,8 +141,8 @@ class ConsumerInboxIntegrationTest {
     }
 
     @Bean
-    public ScheduledTrigger scheduledTrigger() {
-      return mock(ScheduledTrigger.class);
+    public PollingScheduler scheduledTrigger() {
+      return mock(PollingScheduler.class);
     }
 
     @Bean

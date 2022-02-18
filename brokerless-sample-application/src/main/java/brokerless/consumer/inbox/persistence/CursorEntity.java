@@ -13,12 +13,12 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "BROKERLESS_PRODUCER_CURSORS")
+@Table(name = "BROKERLESS_CURSORS")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
-public class ProducerCursorEntity {
+public class CursorEntity {
 
   @Id
   @Column(name = "producer_name")

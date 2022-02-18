@@ -4,16 +4,15 @@ import brokerless.consumer.handling.BrokerlessEventHandler;
 import brokerless.consumer.handling.registry.EventHandlerRegistry;
 import brokerless.model.EventPayload;
 import brokerless.producer.publication.EventPublisher;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -38,12 +37,12 @@ public class EventsController {
 
   @BrokerlessEventHandler
   public void handleSampleEvent1(SampleEvent1 event) {
-    log.info(event.getMessage());
+    log.info("Handle: " + event.getMessage());
   }
 
   @BrokerlessEventHandler
   public void handleSampleEvent2(SampleEvent2 event) {
-    log.info(event.getMessage());
+    log.info("Handle: " + event.getMessage());
   }
 
 

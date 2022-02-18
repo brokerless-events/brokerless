@@ -6,16 +6,15 @@ import brokerless.model.serialization.ObjectMapperProvider;
 import brokerless.model.transit.TransitedEventMessage;
 import brokerless.producer.publication.EventProductionTracing;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import lombok.SneakyThrows;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
 

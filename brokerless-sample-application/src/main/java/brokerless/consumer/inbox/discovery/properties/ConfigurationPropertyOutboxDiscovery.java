@@ -1,7 +1,6 @@
-package brokerless.consumer.inbox.discovery;
+package brokerless.consumer.inbox.discovery.properties;
 
-import brokerless.consumer.inbox.configuration.ProducerConfiguration;
-import brokerless.consumer.inbox.configuration.ProducersConfigurationProperties;
+import brokerless.consumer.inbox.discovery.OutboxDiscovery;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

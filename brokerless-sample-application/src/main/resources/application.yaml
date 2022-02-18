@@ -6,3 +6,17 @@ spring:
       enabled: true
 server:
   port: 9100
+logging:
+  level:
+    brokerless: trace
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: true
+brokerless:
+  consumer:
+    producers:
+      - name: sample-application
+        base-url: http://127.0.0.1:9100

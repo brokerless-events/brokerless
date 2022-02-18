@@ -1,10 +1,9 @@
 package brokerless.consumer.inbox.receiving;
 
-import brokerless.consumer.inbox.configuration.ProducerConfiguration;
+import brokerless.consumer.inbox.discovery.properties.ProducerConfiguration;
 import brokerless.model.serialization.ObjectMapperProvider;
 import brokerless.model.transit.GetOutboxEventsRequest;
 import brokerless.model.transit.GetOutboxEventsResponse;
-import brokerless.model.transit.TransitedEventMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;

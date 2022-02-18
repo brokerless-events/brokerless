@@ -1,10 +1,5 @@
 package brokerless.producer.outbox.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import brokerless.model.EventMetadata;
 import brokerless.model.EventTracing;
 import brokerless.model.transit.TransitedEventMessage;
@@ -12,10 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
-import org.springframework.lang.Nullable;
 
 import static java.time.Instant.now;
 

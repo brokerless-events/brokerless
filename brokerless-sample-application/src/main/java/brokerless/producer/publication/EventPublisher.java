@@ -3,11 +3,11 @@ package brokerless.producer.publication;
 import brokerless.model.EventMetadata;
 import brokerless.model.EventPayload;
 import brokerless.producer.outbox.persistence.OutboxRepositoryClient;
+import com.fasterxml.uuid.Generators;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
-import org.springframework.stereotype.Component;
-import com.fasterxml.uuid.Generators;
 
 import static java.time.Instant.now;
 import static java.util.UUID.randomUUID;

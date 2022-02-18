@@ -12,3 +12,13 @@ Content-Type: application/json
 {}
 
 ###
+
+// poll
+POST http://127.0.0.1:9100/brokerless-events/outbox
+Content-Type: application/json
+
+{
+  "eventTypes": ["brokerless.sampleapp.SampleEvent1", "brokerless.sampleapp.SampleEvent2"]
+}
+
+###

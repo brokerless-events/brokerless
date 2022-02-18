@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.ReflectionUtils.MethodFilter;
 
@@ -18,6 +19,7 @@ import java.lang.reflect.Method;
 import static brokerless.consumer.handling.registry.EventHandlerConfigurationException.*;
 import static org.springframework.core.annotation.AnnotationUtils.findAnnotation;
 
+@Configuration
 public class EventHandlerDiscoveryProcessor implements BeanPostProcessor {
 
   private static final MethodFilter hasAnnotation = method -> findAnnotation(method, BrokerlessEventHandler.class) != null;
