@@ -12,7 +12,7 @@ public class PollingScheduler {
 
   private final PollingEventsReceiver pollingEventsReceiver;
 
-  @Scheduled(fixedRate = 3000)
+  @Scheduled(fixedRate = 1000, initialDelay = 5000)
   public void pollAllOutboxes() {
     pollingEventsReceiver.receive();
   }
