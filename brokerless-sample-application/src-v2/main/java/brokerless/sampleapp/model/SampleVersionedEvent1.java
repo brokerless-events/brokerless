@@ -5,8 +5,8 @@ import brokerless.model.EventPayload;
 import lombok.Value;
 
 @Value
-@BrokerlessEvent
-public class SampleEvent1 implements EventPayload {
+@BrokerlessEvent(versionMajor = 2)
+public class SampleVersionedEvent1 implements EventPayload {
 
   String message;
   boolean throwException;

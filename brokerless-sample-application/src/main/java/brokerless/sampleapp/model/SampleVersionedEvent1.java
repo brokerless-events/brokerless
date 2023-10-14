@@ -6,7 +6,7 @@ import lombok.Value;
 
 @Value
 @BrokerlessEvent
-public class SampleEvent1 implements EventPayload {
+public class SampleVersionedEvent1 implements EventPayload {
 
   String message;
   boolean throwException;

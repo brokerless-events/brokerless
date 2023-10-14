@@ -14,7 +14,7 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
 
   app1:
-    image: brokerless-sample-application:snapshot
+    image: brokerless-sample-application:1
     networks:
       - brokerless
     ports:
@@ -22,9 +22,12 @@ services:
     environment:
       - spring.application.name=app1
       - spring.datasource.url=jdbc:postgresql://postgres:5432/app1
+    deploy:
+      restart_policy:
+        condition: any
 
   app2:
-    image: brokerless-sample-application:snapshot
+    image: brokerless-sample-application:1
     networks:
       - brokerless
     ports:
@@ -34,9 +37,12 @@ services:
       - spring.datasource.url=jdbc:postgresql://postgres:5432/app2
       - brokerless.consumer.producers[0].name=app1
       - brokerless.consumer.producers[0].base-url=http://app1:9100
+    deploy:
+      restart_policy:
+        condition: any
 
   app3:
-    image: brokerless-sample-application:snapshot
+    image: brokerless-sample-application:1
     networks:
       - brokerless
     ports:
@@ -48,9 +54,12 @@ services:
       - brokerless.consumer.producers[0].base-url=http://app1:9100
       - brokerless.consumer.producers[1].name=app2
       - brokerless.consumer.producers[1].base-url=http://app1:9100
+    deploy:
+      restart_policy:
+        condition: any
 
   app4:
-    image: brokerless-sample-application:snapshot
+    image: brokerless-sample-application:1
     networks:
       - brokerless
     ports:
@@ -64,5 +73,8 @@ services:
       - brokerless.consumer.producers[1].base-url=http://app2:9100
       - brokerless.consumer.producers[2].name=app3
       - brokerless.consumer.producers[2].base-url=http://app3:9100
+    deploy:
+      restart_policy:
+        condition: any
 networks:
   brokerless:

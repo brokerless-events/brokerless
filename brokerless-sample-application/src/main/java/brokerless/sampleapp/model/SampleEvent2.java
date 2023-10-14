@@ -9,4 +9,6 @@ import lombok.Value;
 public class SampleEvent2 implements EventPayload {
 
   String message;
+  boolean throwException;
+  boolean shutdownApplication;
 }
