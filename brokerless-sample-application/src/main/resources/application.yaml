@@ -1,9 +1,9 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:brokerless
-  h2:
-    console:
-      enabled: true
+  config:
+    import: classpath:persistence.yaml
+  cloud:
+    kubernetes:
+      enabled: false
 server:
   port: 9100
 logging:
@@ -17,6 +17,4 @@ management:
     enabled-by-default: true
 brokerless:
   consumer:
-    producers:
-      - name: sample-application
-        base-url: http://127.0.0.1:9100
+    producers: []

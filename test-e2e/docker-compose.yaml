@@ -1,0 +1,68 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:15.1
+    networks:
+      - brokerless
+    volumes:
+      - ./docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
+    ports:
+      - "5001:5432"
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=app1,app2,app3,app4
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+  app1:
+    image: brokerless-sample-application:snapshot
+    networks:
+      - brokerless
+    ports:
+      - "9101:9100"
+    environment:
+      - spring.application.name=app1
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/app1
+
+  app2:
+    image: brokerless-sample-application:snapshot
+    networks:
+      - brokerless
+    ports:
+      - "9102:9100"
+    environment:
+      - spring.application.name=app2
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/app2
+      - brokerless.consumer.producers[0].name=app1
+      - brokerless.consumer.producers[0].base-url=http://app1:9100
+
+  app3:
+    image: brokerless-sample-application:snapshot
+    networks:
+      - brokerless
+    ports:
+      - "9103:9100"
+    environment:
+      - spring.application.name=app2
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/app2
+      - brokerless.consumer.producers[0].name=app1
+      - brokerless.consumer.producers[0].base-url=http://app1:9100
+      - brokerless.consumer.producers[1].name=app2
+      - brokerless.consumer.producers[1].base-url=http://app1:9100
+
+  app4:
+    image: brokerless-sample-application:snapshot
+    networks:
+      - brokerless
+    ports:
+      - "9104:9100"
+    environment:
+      - spring.application.name=app2
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/app4
+      - brokerless.consumer.producers[0].name=app1
+      - brokerless.consumer.producers[0].base-url=http://app1:9100
+      - brokerless.consumer.producers[1].name=app2
+      - brokerless.consumer.producers[1].base-url=http://app2:9100
+      - brokerless.consumer.producers[2].name=app3
+      - brokerless.consumer.producers[2].base-url=http://app3:9100
+networks:
+  brokerless:

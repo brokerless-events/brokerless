@@ -1,24 +1,20 @@
+### Publish
 POST http://127.0.0.1:9100/publish
 Content-Type: application/json
 
 {}
 
-###
 
-
+### Get received
 GET http://127.0.0.1:9100/received
 Content-Type: application/json
 
 {}
 
-###
-
-// poll
+### Poll
 POST http://127.0.0.1:9100/brokerless-events/outbox
 Content-Type: application/json
 
 {
-  "eventTypes": ["brokerless.sampleapp.SampleEvent1", "brokerless.sampleapp.SampleEvent2"]
+  "eventTypes": ["brokerless.sampleapp.model.SampleEvent1", "brokerless.sampleapp.model.SampleEvent2"]
 }
-
-###

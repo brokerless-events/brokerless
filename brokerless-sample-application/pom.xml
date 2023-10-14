@@ -5,35 +5,54 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.6.2</version>
+    <version>3.1.2</version>
     <relativePath/>
   </parent>
   <groupId>dev.brokerless</groupId>
-  <artifactId>brokerless-sample-aplication</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>brokerless-sample-aplication</name>
-  <description>brokerless-sample-aplication</description>
+  <artifactId>brokerless-sample-application</artifactId>
+  <version>LATEST-SNAPSHOT</version>
+  <name>brokerless-sample-application</name>
+
   <properties>
     <java.version>17</java.version>
-    <lombok.version>1.18.22</lombok.version>
-    <java-uuid-generator.version>4.0.1</java-uuid-generator.version>
-    <jackson-databind.version>2.13.1</jackson-databind.version>
-    <spring-cloud-leader.version>2.1.1</spring-cloud-leader.version>
-    <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+    <lombok.version>1.18.30</lombok.version>
+    <jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
+    <postgresql.version>42.3.0</postgresql.version>
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
     <dependency>
+      <groupId>dev.brokerless</groupId>
+      <artifactId>brokerless-model</artifactId>
+      <version>LATEST-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>dev.brokerless</groupId>
+      <artifactId>brokerless-consumer</artifactId>
+      <version>LATEST-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>dev.brokerless</groupId>
+      <artifactId>brokerless-producer</artifactId>
+      <version>LATEST-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -50,39 +69,13 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-kubernetes-fabric8-leader</artifactId>
-      <version>${spring-cloud-leader.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.security</groupId>
-          <artifactId>spring-security-crypto</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
-      <version>${java-uuid-generator.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson-databind.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-      <version>2.13.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
 
     <dependency>
@@ -93,7 +86,19 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
-      <version>1.16.2</version>
+      <version>1.19.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>1.19.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>1.19.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -109,11 +114,33 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>brokerless.sampleapp.BrokerlessSampleApplication</mainClass>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
         <version>${jib-maven-plugin.version}</version>
+        <configuration>
+          <from>
+<!--            <image>eclipse-temurin:21_35-jre</image>-->
+            <platforms>
+              <platform>
+                <architecture>arm64</architecture>
+                <os>linux</os>
+              </platform>
+            </platforms>
+          </from>
+          <to>
+            <image>brokerless-sample-application</image>
+            <tags>snapshot</tags>
+          </to>
+          <container>
+            <mainClass>brokerless.sampleapp.BrokerlessSampleApplication</mainClass>
+            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+          </container>
+        </configuration>
       </plugin>
     </plugins>
   </build>
