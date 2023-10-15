@@ -8,6 +8,12 @@ import lombok.Value;
 @BrokerlessEvent
 public class SampleEvent8 implements EventPayload {
 
+  public SampleEvent8(String message) {
+    this.message = message;
+    this.throwException = false;
+    this.shutdownApplication = false;
+  }
+
   String message;
   boolean throwException;
   boolean shutdownApplication;
